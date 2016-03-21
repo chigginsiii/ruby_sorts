@@ -44,7 +44,7 @@ Or install it yourself as:
     sorted = RubySorts.merge_sort unsorted
 
     # RubySorts::QuickSort
-    sorted = RubySorts::quick_sort unsorted
+    sorted = RubySorts.quick_sort unsorted
 
 ## Benchmark
 
