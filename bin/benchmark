@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "ruby_sorts"
+
+require 'benchmark'
+require 'trollop'
+
+opts = Trollop::options do
+	opt :size, "size of array (:sm, :md, :lg)", short: '-s', default: 'md'
+	opt :iterations, "number of times to sort", short: '-n', default: 10
+end
+
+size = opts[:size].to_sym
+
+#
+# configs for building the arrays
+#
+
+def sets 
+	{
+		sm: -> { (1..100).to_a.shuffle.take(set_nums[:sm]) },
+		md: -> { (1..10_000).to_a.shuffle.take(set_nums[:md]) },
+		lg: -> { (1..10_000_000).to_a.shuffle.take(set_nums[:lg]) }
+	}
+end
+
+def set_nums
+	{
+		sm: 10, 
+		md: 500,
+		lg: 10000
+	}
+end
+
+def array_file_name(size)
+	File.expand_path("../../tmp/test_array_#{size}.txt", __FILE__)
+end
+
+
+def load_arrays_from_file(size)
+	array_filename = array_file_name(size)
+	unless File.exist? array_filename
+		lines = 10.times.map { sets[size].call.join(' ') }
+		File.write(array_file_name(size), lines.join("\n")) do
+		end
+	end
+
+	# each line is an array
+	lines = File.readlines(array_file_name(size))
+	lines.map { |line| line.split(" ").map(&:to_i) }
+end
+
+#
+# load it from tmp files or create them
+#
+puts "getting ten shuffled arrays of #{set_nums[size]} elements"
+test_arrays = load_arrays_from_file(size)
+
+puts "#{opts[:iterations]} iterations solving 10 arrays of #{test_arrays[0].length} elements"
+
+Benchmark.bm(7) do |x|
+	[
+		:bubble_sort, :selection_sort, 
+		:insertion_sort, :shell_sort, 
+		:merge_sort, :quick_sort
+	].each do |sort_method|
+		x.report(sort_method) do
+		  opts[:iterations].times { test_arrays.each { |ta| RubySorts.send sort_method, ta } }
+		end
+	end
+end
