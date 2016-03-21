@@ -45,7 +45,8 @@ BEGIN THE QUICK SORT FUNCTION:
   - IMPORTANT:
     - the quick_sort function should return lists of 1 as 'sorted'
     - the quick_sort function should sort a <=> b and return the pair
-
+      - this is my own personal optimization, I just didn't see an advantage of recursing
+        one side of a couple over bubble sorting a two-element array.
 
 =end
 

@@ -29,22 +29,30 @@ Or install it yourself as:
 ## Sort Algorithms
 
     # RubySorts::BubbleSort
-    RubySorts.bubble unsorted
+    sorted = RubySorts.bubble_sort unsorted
 
     # RubySorts::SelectionSort
-    RubySorts::selection unsorted
+    sorted = RubySorts.selection_sort unsorted
 
     # RubySorts::InsertionSort
-    RubySorts.insertion unsorted
+    sorted = RubySorts.insertion_sort unsorted
 
     # RubySorts::ShellSort
-    RubySorts.shell unsorted
+    sorted = RubySorts.shell_short unsorted
 
     # RubySorts::MergeSort
-    RubySorts.merge
+    sorted = RubySorts.merge_sort unsorted
 
     # RubySorts::QuickSort
-    RubySorts::quick unsorted
+    sorted = RubySorts::quick_sort unsorted
+
+## Benchmark
+
+    > bin/benchmark -h 
+    Options:
+      -s, --size=<s>          size of array ('sm', 'md', 'lg') (default: 'md')
+      -n, --iterations=<i>    number of times to sort (default: 10)
+      -h, --help              Show this message
 
 ## Development
 
