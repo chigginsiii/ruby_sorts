@@ -7,7 +7,7 @@ A number of sorting algorithms implented and benchmarked.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ruby_sorts'
+gem 'ruby_sorts', git: 'https://github.com/chigginsiii/ruby_sorts'
 ```
 
 And then execute:
